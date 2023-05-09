@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import cn from '@/utils/cn';
 
 const navigation = [
   { name: 'Articles', path: '/articles' },
@@ -9,20 +10,20 @@ const navigation = [
 
 export default function Header(): JSX.Element {
   return (
-    <header className='w-full'>
-      <div className='mx-auto flex max-w-3xl items-center justify-between px-4 py-6 sm:px-6 xl:max-w-5xl xl:px-0'>
-        <h1 className='text-xl font-bold md:text-2xl'>
-          <Link className='flex items-center gap-2' href='/'>
-            <Image alt='' className='rounded-full' height={32} src='/img/orange.jpg' width={32} />
+    <header>
+      <div className={cn('mx-auto flex max-w-6xl items-center justify-between px-4 py-6 sm:px-6 xl:px-0')}>
+        <h1 className={cn('text-2xl font-bold md:text-2xl')}>
+          <Link className={cn('flex items-center gap-2')} href='/'>
+            <Image alt='' className={cn('rounded-full')} height={32} src='/orange.jpg' width={32} />
             <span>blog.vanillism</span>
           </Link>
         </h1>
-        <nav className='hidden sm:block'>
-          <ul className='flex gap-6'>
+        <nav>
+          <ul className={cn('flex gap-3 xl:gap-6')}>
             {navigation.map((item) => {
               return (
                 <li key={item.name}>
-                  <Link className='font-bold transition-colors hover:text-orange-500' href={item.path}>
+                  <Link className={cn('font-bold transition-colors hover:text-orange-500')} href={item.path}>
                     {item.name}
                   </Link>
                 </li>

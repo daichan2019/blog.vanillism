@@ -1,4 +1,5 @@
 import './globals.css';
+import Footer from '@/components/footer';
 import Header from '@/components/header';
 import cn from '@/utils/cn';
 
@@ -13,7 +14,8 @@ export default function RootLayout({ children }: { children: JSX.Element }): JSX
       <body>
         <div className={cn('flex min-h-screen flex-col bg-neutral-50')}>
           <Header />
-          <main className={cn('flex-1 overflow-x-hidden')}>{children}</main>
+          <main className={cn('mx-auto w-full max-w-6xl flex-1 overflow-x-hidden px-4 py-8')}>{children}</main>
+          <Footer />
         </div>
       </body>
     </html>
