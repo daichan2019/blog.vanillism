@@ -1,4 +1,5 @@
 {
+  "root": true,
   "extends": [
     "eslint:recommended",
     "standard",
@@ -114,6 +115,20 @@
       }
     ]
   },
+  "overrides": [
+    {
+      "files": ["!src/components/**/*", "!src/apps/**/*"],
+      "rules": {
+        "import/prefer-default-export": "off"
+      }
+    },
+    {
+      "files": ["!src/**/*"],
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": "off"
+      }
+    }
+  ],
   "settings": {
     "tailwindcss": {
       "callees": ["cn"]
