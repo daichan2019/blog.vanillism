@@ -9,13 +9,26 @@ const Post = defineDocumentType(() => ({
   },
   contentType: 'mdx',
   fields: {
-    date: {
-      description: 'The date of the post',
+    publishedAt: {
+      description: 'publishedAt',
       required: true,
       type: 'date',
     },
+    slug: {
+      description: 'slug',
+      required: true,
+      type: 'string',
+    },
+    tags: {
+      description: 'tag',
+      of: {
+        type: 'string',
+      },
+      required: true,
+      type: 'list',
+    },
     title: {
-      description: 'The title of the post',
+      description: 'title',
       required: true,
       type: 'string',
     },

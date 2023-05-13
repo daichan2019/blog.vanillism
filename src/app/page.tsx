@@ -1,9 +1,9 @@
 import { compareDesc } from 'date-fns';
 import PostCard from '@/components/post-card';
-import { allPosts } from 'contentlayer/generated';
+import { Post, allPosts } from 'contentlayer/generated';
 
 export default function Page(): JSX.Element {
-  const posts = allPosts.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
+  const posts = allPosts.sort((a: Post, b: Post) => compareDesc(new Date(a.publishedAt), new Date(b.publishedAt)));
 
   return (
     <div>

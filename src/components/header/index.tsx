@@ -2,11 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import cn from '@/utils/cn';
 
-const navigation = [
-  { name: 'Articles', path: '/articles' },
-  { name: 'Tags', path: '/tags' },
-  { name: 'Me', path: '/me' },
-];
+const navigation = [{ name: 'About Me', path: '/me' }];
 
 export default function Header(): JSX.Element {
   return (
