@@ -1,4 +1,12 @@
 import { defineDocumentType, makeSource } from 'contentlayer/source-files';
+import rehypeAccessibleEmojis from 'rehype-accessible-emojis';
+import rehypeAutolinkHeadings, { Options as RehypeAutolinkHeadingsOptions } from 'rehype-autolink-headings';
+import rehypeCodeTitles from 'rehype-code-titles';
+import rehypeExternalLinks, { Options as RehypeExternalLinksOptions } from 'rehype-external-links';
+import rehypePrism from 'rehype-prism-plus';
+import rehypeShiftHeading from 'rehype-shift-heading';
+import rehypeSlug from 'rehype-slug';
+import remarkGfm from 'remark-gfm';
 
 const Post = defineDocumentType(() => ({
   computedFields: {
@@ -40,4 +48,27 @@ const Post = defineDocumentType(() => ({
 export default makeSource({
   contentDirPath: 'posts',
   documentTypes: [Post],
+  mdx: {
+    rehypePlugins: [
+      rehypeSlug,
+      rehypeCodeTitles,
+      rehypePrism,
+      rehypeAccessibleEmojis,
+      () =>
+        rehypeShiftHeading({
+          shift: 1,
+        }),
+      (option: RehypeAutolinkHeadingsOptions) =>
+        rehypeAutolinkHeadings({
+          ...option,
+          behavior: 'wrap',
+        }),
+      (option: RehypeExternalLinksOptions) =>
+        rehypeExternalLinks({
+          ...option,
+          target: '_blank',
+        }),
+    ],
+    remarkPlugins: [remarkGfm],
+  },
 });

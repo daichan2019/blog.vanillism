@@ -1,0 +1,212 @@
+---
+title: React Hook Formを使用したComponent設計を考える
+slug: react-hook-form-component-storategy
+publishedAt: 2023-02-27
+tags: [React, TypeScript]
+---
+
+私は React で Form を作成するとき、React Hook Form をよく使用します。
+React Hook Form に依存した Component と、そうではない Component を分離することで将来性を見越した運用ができると思っています。
+他の方がどのように書いているのかを記事やリポジトリを参考にし、オレオレではありますが、Component 設計を考えました。
+
+## 前提条件
+
+- React v18
+- React Hook Form v7
+- Tailwind CSS v3
+- Zod v3
+- @hookform/resolvers v2
+
+## 各 Component
+
+### Form
+
+React のベストプラクティスとして多くの方から支持されている Bulletproof React の `Form` コンポーネントを参考にしています。
+`onSubmit` や `options`、`schema` を props として受け取ることで `Form` コンポーネントを使用する側でこれらの値をコントロールすることができます。
+
+```tsx
+import { zodResolver } from '@hookform/resolvers/zod';
+import type { ReactNode } from 'react';
+import { useEffect } from 'react';
+import type { FieldValues, SubmitHandler, UseFormProps, UseFormReturn } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+import type { ZodType, ZodTypeDef } from 'zod';
+import { cn } from '@/utils/cn';
+
+type FormProps<TFormValues extends FieldValues, Schema> = {
+  className?: string;
+  onSubmit: SubmitHandler<TFormValues>;
+  children: (methods: UseFormReturn<TFormValues>) => ReactNode;
+  options?: UseFormProps<TFormValues>;
+  id?: string;
+  schema?: Schema;
+};
+
+export const Form = <
+  TFormValues extends Record<string, unknown> = Record<string, unknown>,
+  Schema extends ZodType<unknown, ZodTypeDef, unknown> = ZodType<unknown, ZodTypeDef, unknown>,
+>({
+  children,
+  className,
+  id,
+  onSubmit,
+  options,
+  schema,
+}: FormProps<TFormValues, Schema>) => {
+  const methods = useForm<TFormValues>({
+    ...options,
+    resolver: schema && zodResolver(schema),
+  });
+
+  useEffect(() => {
+    methods.reset();
+  }, [methods, methods.formState.isSubmitSuccessful]);
+
+  return (
+    <form className={cn(className)} onSubmit={methods.handleSubmit(onSubmit)} id={id}>
+      {children(methods)}
+    </form>
+  );
+};
+```
+
+### React Hook Form 依存の Input
+
+後に記載する見た目のみを伴う Input をラップする Component です。
+
+```tsx
+import type { DeepMap, FieldError, FieldValues, UseControllerProps } from 'react-hook-form';
+import { useController } from 'react-hook-form';
+
+import type { InputProps } from '@/components/input';
+import { Input } from '@/components/input';
+
+export type InputControlProps<T extends FieldValues> = InputProps & UseControllerProps<T>;
+
+export const InputControl = <T extends FieldValues>({ control, name, placeholder }: InputControlProps<T>) => {
+  const {
+    field: { onChange, ref, value },
+    formState: { errors, isSubmitting },
+  } = useController<T>({ name, control });
+
+  return (
+    <Input
+      onChange={onChange}
+      name={name}
+      inputRef={ref}
+      value={value}
+      isSubmitting={isSubmitting}
+      placeholder={placeholder}
+      error={errors[name] && `${(errors[name] as DeepMap<FieldValues, FieldError>).message}`}
+    />
+  );
+};
+```
+
+### 見た目のみを伴う Input
+
+```tsx
+import type { ChangeEventHandler, Ref } from 'react';
+
+import { cn } from '@/utils/cn';
+
+export type InputProps = {
+  placeholder?: string;
+  error?: string;
+  name: string;
+};
+
+export const Input = ({
+  error,
+  inputRef,
+  name,
+  onChange,
+  placeholder,
+  value,
+}: InputProps & {
+  inputRef?: Ref<HTMLInputElement>;
+  isSubmitting?: boolean;
+  value: string;
+  onChange: ChangeEventHandler<HTMLInputElement>;
+}) => {
+  return (
+    <>
+      <input
+        onChange={onChange}
+        name={name}
+        value={value}
+        ref={inputRef}
+        placeholder={placeholder}
+        className={cn(
+          'border-secondary-gray w-full rounded-md border p-2 valid:ring-green-500 focus:ring-indigo-500',
+          error && 'border border-red-500 text-red-900 focus:border-red-500 focus:ring-red-500 dark:border-red-500',
+        )}
+      />
+      {!!error && <p className='mt-1 text-xs text-red-500 empty:hidden'>{error}</p>}
+    </>
+  );
+};
+```
+
+## 使用例
+
+```tsx
+import type { FC } from 'react';
+import { useCreateUser } from 'src/features/user/hooks/use-create-user';
+import { z } from 'zod';
+
+import { Button } from '@/components/button';
+import { Form } from '@/components/form';
+import { InputControl } from '@/components/input-control';
+import { cn } from '@/utils/cn';
+
+type FormValue = {
+  name: string;
+};
+
+const validationSchema = z.object({
+  name: z
+    .string()
+    .min(1, { message: '名前を入力してください' })
+    .max(40, { message: '名前は 40 文字以内で入力してください' }),
+});
+
+export const InviteForm: FC = () => {
+  const [createUser] = useCreateUser();
+
+  return (
+    <Form<FormValue, typeof validationSchema>
+      id='invite-form'
+      onSubmit={(data) => {
+        createUser({ variables: { name: data.name } });
+      }}
+      options={{
+        reValidateMode: 'onChange',
+        defaultValues: {
+          name: '',
+        },
+      }}
+      schema={validationSchema}
+      className={cn('flex gap-2')}
+    >
+      {({ control }) => {
+        return (
+          <>
+            <div className='flex-1'>
+              <InputControl name='name' control={control} />
+            </div>
+            <Button type='submit'>追加する</Button>
+          </>
+        );
+      }}
+    </Form>
+  );
+};
+```
+
+## 参考にさせていただいたもの
+
+この記事を書くにあたり参考にさせていただいたリポジトリや記事は以下の通りです。
+
+[bulletproof-react](https://github.com/alan2207/bulletproof-react)
+[React Hook Form(v7)を使ったコンポーネント設計案](https://zenn.dev/manalink_dev/articles/manalink-react-hook-form-v7)
