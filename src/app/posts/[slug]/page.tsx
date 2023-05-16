@@ -1,6 +1,7 @@
 import { format, parseISO } from 'date-fns';
 import { Metadata } from 'next';
 import { useMDXComponent } from 'next-contentlayer/hooks';
+import cn from '@/utils/cn';
 import { allPosts } from 'contentlayer/generated';
 
 export type PageProps = {
@@ -25,13 +26,13 @@ export default function Page({ params }: PageProps): JSX.Element | null {
 
   return (
     <article>
-      <div className='mb-8 text-center'>
-        <time className='mb-1 text-xs text-gray-600' dateTime={post?.publishedAt}>
+      <div className={cn('mb-8 text-center')}>
+        <time className={cn('mb-1 text-xs text-gray-600')} dateTime={post?.publishedAt}>
           {format(parseISO(post?.publishedAt || ''), 'LLLL d, yyyy')}
         </time>
         <h1>{post?.title}</h1>
       </div>
-      <MDXContent />
+      <MDXContent className={cn('prose')} />
     </article>
   );
 }

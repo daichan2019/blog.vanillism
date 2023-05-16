@@ -1,4 +1,5 @@
 import './globals.css';
+import './prism-vsc-dark-plus.css';
 import Footer from '@/components/footer';
 import Header from '@/components/header';
 import cn from '@/utils/cn';

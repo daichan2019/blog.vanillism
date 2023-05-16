@@ -63,7 +63,7 @@ export default makeSource({
           ...option,
           behavior: 'wrap',
         }),
-      (option: RehypeExternalLinksOptions) =>
+      (option: [(RehypeExternalLinksOptions | undefined)?] | void[]) =>
         rehypeExternalLinks({
           ...option,
           target: '_blank',
