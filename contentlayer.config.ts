@@ -1,8 +1,8 @@
 import { defineDocumentType, makeSource } from 'contentlayer/source-files';
-import rehypeAccessibleEmojis from 'rehype-accessible-emojis';
+import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis';
 import rehypeAutolinkHeadings, { Options as RehypeAutolinkHeadingsOptions } from 'rehype-autolink-headings';
 import rehypeCodeTitles from 'rehype-code-titles';
-import rehypeExternalLinks, { Options as RehypeExternalLinksOptions } from 'rehype-external-links';
+import rehypeExternalLinks from 'rehype-external-links';
 import rehypePrism from 'rehype-prism-plus';
 import rehypeShiftHeading from 'rehype-shift-heading';
 import rehypeSlug from 'rehype-slug';
@@ -54,6 +54,7 @@ export default makeSource({
       rehypeCodeTitles,
       rehypePrism,
       rehypeAccessibleEmojis,
+      rehypeExternalLinks,
       () =>
         rehypeShiftHeading({
           shift: 1,
@@ -62,11 +63,6 @@ export default makeSource({
         rehypeAutolinkHeadings({
           ...option,
           behavior: 'wrap',
-        }),
-      (option: [(RehypeExternalLinksOptions | undefined)?] | void[]) =>
-        rehypeExternalLinks({
-          ...option,
-          target: '_blank',
         }),
     ],
     remarkPlugins: [remarkGfm],

@@ -11,7 +11,7 @@ export default function Header(): JSX.Element {
         <h1 className={cn('text-2xl font-bold md:text-2xl')}>
           <Link className={cn('flex items-center gap-2')} href='/'>
             <Image alt='' className={cn('rounded-full')} height={32} src='/orange.jpg' width={32} />
-            <span>blog.vanillism</span>
+            <span>vanilla.dev blog</span>
           </Link>
         </h1>
         <nav>

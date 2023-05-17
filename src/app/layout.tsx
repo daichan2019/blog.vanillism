@@ -6,7 +6,7 @@ import cn from '@/utils/cn';
 
 export const metadata = {
   description: 'Webフロントエンドエンジニアvanilla.devのTech Blog',
-  title: 'blog.vanillism',
+  title: 'vanilla.dev blog',
 };
 
 export default function RootLayout({ children }: { children: JSX.Element }): JSX.Element {

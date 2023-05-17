@@ -26,13 +26,11 @@ export default function Page({ params }: PageProps): JSX.Element | null {
 
   return (
     <article>
-      <div className={cn('mb-8 text-center')}>
-        <time className={cn('mb-1 text-xs text-gray-600')} dateTime={post?.publishedAt}>
-          {format(parseISO(post?.publishedAt || ''), 'LLLL d, yyyy')}
-        </time>
-        <h1>{post?.title}</h1>
-      </div>
-      <MDXContent className={cn('prose')} />
+      <time className={cn('text-xs text-gray-600')} dateTime={post?.publishedAt}>
+        {format(parseISO(post?.publishedAt || ''), 'yyyy-MM-dd')}
+      </time>
+      <h1 className={cn('mt-3 text-2xl font-bold')}>{post?.title}</h1>
+      <MDXContent className={cn('prose mt-4')} />
     </article>
   );
 }
