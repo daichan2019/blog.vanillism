@@ -22,7 +22,7 @@ export default function Footer(): JSX.Element {
           <div>{' | '}</div>
           <p>{`© ${new Date().getFullYear()}`}</p>
           <div>{' | '}</div>
-          <Link href='/'>blog.vanillism</Link>
+          <Link href='/'>vanilla.dev blog</Link>
         </div>
       </div>
     </footer>
