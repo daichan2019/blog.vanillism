@@ -29,8 +29,8 @@ export default function Page({ params }: PageProps): JSX.Element | null {
       <time className={cn('text-xs text-gray-600')} dateTime={post?.publishedAt}>
         {format(parseISO(post?.publishedAt || ''), 'yyyy-MM-dd')}
       </time>
-      <h1 className={cn('mt-3 text-2xl font-bold')}>{post?.title}</h1>
-      <div className={cn('prose mt-16 xl:prose-xl')}>
+      <h1 className={cn('mt-3 text-3xl font-bold xl:text-4xl')}>{post?.title}</h1>
+      <div className={cn('prose mt-16 w-full max-w-full xl:prose-xl')}>
         <MDXContent />
       </div>
     </article>

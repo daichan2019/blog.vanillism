@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import cn from '@/utils/cn';
 
-const navigation = [{ name: 'About Me', path: '/me' }];
+const navigation = [{ name: 'About Me', path: '/about' }];
 
 export default function Header(): JSX.Element {
   return (

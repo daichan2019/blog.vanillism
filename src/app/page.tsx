@@ -3,6 +3,10 @@ import PostCard from '@/components/post-card';
 import cn from '@/utils/cn';
 import { Post, allPosts } from 'contentlayer/generated';
 
+export const metadata = {
+  title: 'vanilla.dev blog',
+};
+
 export default function Page(): JSX.Element {
   const posts = allPosts.sort((a: Post, b: Post) => compareDesc(new Date(a.publishedAt), new Date(b.publishedAt)));
 

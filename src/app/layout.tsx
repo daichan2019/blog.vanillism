@@ -5,8 +5,9 @@ import Header from '@/components/header';
 import cn from '@/utils/cn';
 
 export const metadata = {
-  description: 'Webフロントエンドエンジニアvanilla.devのTech Blog',
-  title: 'vanilla.dev blog',
+  title: {
+    template: '%s | vanilla.dev blog',
+  },
 };
 
 export default function RootLayout({ children }: { children: JSX.Element }): JSX.Element {

@@ -1,6 +1,11 @@
 import Image from 'next/image';
 import cn from '@/utils/cn';
 
+export const metadata = {
+  description: 'Webフロントエンドエンジニアvanilla.devについて',
+  title: 'About Me',
+};
+
 export default function Page(): JSX.Element {
   return (
     <div className={cn('flex flex-col gap-8 lg:flex-row')}>

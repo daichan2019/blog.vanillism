@@ -63,6 +63,9 @@ export default makeSource({
         rehypeAutolinkHeadings({
           ...option,
           behavior: 'wrap',
+          properties: {
+            class: 'font-bold',
+          },
         }),
     ],
     remarkPlugins: [remarkGfm],
