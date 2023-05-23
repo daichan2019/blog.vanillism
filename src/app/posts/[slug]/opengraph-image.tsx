@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { ImageResponse } from 'next/server';
 import { allPosts } from 'contentlayer/generated';
 
