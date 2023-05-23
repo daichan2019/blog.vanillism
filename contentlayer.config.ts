@@ -4,7 +4,6 @@ import rehypeAutolinkHeadings, { Options as RehypeAutolinkHeadingsOptions } from
 import rehypeCodeTitles from 'rehype-code-titles';
 import rehypeExternalLinks from 'rehype-external-links';
 import rehypePrism from 'rehype-prism-plus';
-import rehypeShiftHeading from 'rehype-shift-heading';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
 
@@ -55,16 +54,12 @@ export default makeSource({
       rehypePrism,
       rehypeAccessibleEmojis,
       rehypeExternalLinks,
-      () =>
-        rehypeShiftHeading({
-          shift: 1,
-        }),
       (option: RehypeAutolinkHeadingsOptions) =>
         rehypeAutolinkHeadings({
           ...option,
           behavior: 'wrap',
           properties: {
-            class: 'font-bold',
+            className: 'font-bold',
           },
         }),
     ],
