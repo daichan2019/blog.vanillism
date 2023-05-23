@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { ImageResponse } from 'next/server';
 import { allPosts } from 'contentlayer/generated';
 
@@ -24,16 +25,37 @@ export default function Image({ params }: Params): ImageResponse {
       (
         <div
           style={{
-            alignItems: 'center',
-            background: 'white',
+            background: '#fb923c',
             display: 'flex',
-            fontSize: 128,
+            fontSize: 64,
             height: '100%',
-            justifyContent: 'center',
+            padding: '20px',
             width: '100%',
           }}
         >
-          {post.title}
+          <div
+            style={{
+              alignItems: 'center',
+              background: '#fff',
+              borderRadius: '16px',
+              display: 'flex',
+              justifyContent: 'center',
+              padding: '0 20px',
+              position: 'relative',
+            }}
+          >
+            <span>{post.title}</span>
+            <span
+              style={{
+                bottom: '32px',
+                fontSize: 48,
+                position: 'absolute',
+                right: '40px',
+              }}
+            >
+              vanilla.dev
+            </span>
+          </div>
         </div>
       ),
     );
