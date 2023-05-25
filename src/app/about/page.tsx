@@ -8,7 +8,7 @@ export const metadata = {
 
 export default function Page(): JSX.Element {
   return (
-    <div className={cn('flex flex-col gap-8 lg:flex-row')}>
+    <div className={cn('flex flex-col items-center gap-8 lg:flex-row')}>
       <Image alt='' className={cn('rounded-full')} height={240} src='/orange.jpg' width={240} />
       <div>
         <h2 className={cn('text-2xl font-bold md:text-4xl')}>vanilla.dev</h2>
