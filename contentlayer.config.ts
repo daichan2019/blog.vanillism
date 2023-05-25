@@ -59,7 +59,7 @@ export default makeSource({
           ...option,
           behavior: 'wrap',
           properties: {
-            className: 'no-underline font-bold',
+            className: 'no-underline',
           },
         }),
     ],
