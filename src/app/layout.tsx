@@ -5,8 +5,31 @@ import Header from '@/components/header';
 import cn from '@/utils/cn';
 
 export const metadata = {
+  alternates: {
+    canonical: 'https://blog.vanillism.com',
+  },
+  description: 'vanilla.dev blog',
+  openGraph: {
+    description: 'vanilla.dev blog',
+    locale: 'ja_JP',
+    siteName: 'vanilla.dev blog',
+    title: 'vanilla.dev blog',
+    type: 'website',
+    url: 'https://blog.vanillism.com',
+  },
   title: {
+    default: 'vanilla.dev blog',
     template: '%s | vanilla.dev blog',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    creator: '@vanilla_dev',
+    description: 'vanilla.dev blog',
+    site: '@vanilla_dev',
+    title: 'vanilla.dev blog',
+  },
+  verification: {
+    google: 'サーチコンソールのやつ',
   },
 };
 
