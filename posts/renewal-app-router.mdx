@@ -1,0 +1,113 @@
+---
+title: App Routerを使用して、ブログをリニューアルした
+slug: renewal-app-router
+publishedAt: 2023-05-28
+tags: [Next.js, React, Tailwind.css]
+---
+
+## App Rouer を導入した
+
+Next.js v13.4.0 から Stable になった App Router を使用して、本ブログをリニューアルしました。
+技術スタック以下の通りです。version は執筆時点のものです。
+
+- **Next.js v13.4.4**
+- 記事管理: **Contentlayer v0.3.2**
+- **Tailwind.css**
+- **Remark / Rehype**
+
+コードの詳細は[リポジトリのソースコード](https://github.com/daichan2019/blog.vanillism)を参照いただけたらと思います。
+
+## 記事管理をどうするか
+
+記事管理を MicroCMS から Contentlayer を使用した MDX 管理 に変更しました。
+記事の管理方法は、Notion も検討しましたが、記事の管理を別のサービスに依存したくなかったので、MDX で記事管理をしたいなと考えていたところ、[Next.js の MDX のページ](https://nextjs.org/docs/pages/building-your-application/configuring/mdx#remote-mdx)で Contentlayer が`next-mdx-remote`とともに紹介されていたのを見て、導入を決めました。
+
+[contentlayer の公式サンプルリポジトリ](https://github.com/contentlayerdev/next-contentlayer-example)が Next.js App Router に対応していたので、大部分は公式のリポジトリのコードを参考に書くことができました。
+
+## MDX の装飾
+
+base に`@tailwindcss/typography`を使用し、remark と rehype を用いて、MDX の装飾を行いました。
+具体的には下記のプラグインを導入しました。
+
+- remark-gfm
+- rehype-code-titles
+- rehype-prism
+- rehype-slug
+- rehype-autolink-headings
+- rehype-external-links
+
+`contentlayer.config.ts`に以下のようにプラグインを追加することで、使用可能となります。
+
+```ts
+import { defineDocumentType, makeSource } from 'contentlayer/source-files';
+import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis';
+import rehypeAutolinkHeadings, { Options as RehypeAutolinkHeadingsOptions } from 'rehype-autolink-headings';
+import rehypeCodeTitles from 'rehype-code-titles';
+import rehypeExternalLinks from 'rehype-external-links';
+import rehypePrism from 'rehype-prism-plus';
+import rehypeSlug from 'rehype-slug';
+import remarkGfm from 'remark-gfm';
+
+const Post = defineDocumentType(() => ({
+  computedFields: {
+    url: {
+      resolve: (doc) => `/posts/${doc._raw.flattenedPath}`,
+      type: 'string',
+    },
+  },
+  contentType: 'mdx',
+  fields: {
+    publishedAt: {
+      description: 'publishedAt',
+      required: true,
+      type: 'date',
+    },
+    slug: {
+      description: 'slug',
+      required: true,
+      type: 'string',
+    },
+    tags: {
+      description: 'tag',
+      of: {
+        type: 'string',
+      },
+      required: true,
+      type: 'list',
+    },
+    title: {
+      description: 'title',
+      required: true,
+      type: 'string',
+    },
+  },
+  filePathPattern: '**/*.mdx',
+  name: 'Post',
+}));
+
+export default makeSource({
+  contentDirPath: 'posts',
+  documentTypes: [Post],
+  mdx: {
+    rehypePlugins: [
+      rehypeSlug,
+      rehypeCodeTitles,
+      rehypePrism,
+      rehypeAccessibleEmojis,
+      rehypeExternalLinks,
+      (option: RehypeAutolinkHeadingsOptions) =>
+        rehypeAutolinkHeadings({
+          ...option,
+          behavior: 'wrap',
+          properties: {
+            className: 'font-bold',
+          },
+        }),
+    ],
+    remarkPlugins: [remarkGfm],
+  },
+});
+```
+
+syntax highlight に関しては、css ファイルを直接ダウンロードして、app ディレクトリに格納しているのですが、package から拾う方法がわかりませんでした。
+もっといい方法が絶対あるはず...
