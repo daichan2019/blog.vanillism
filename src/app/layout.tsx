@@ -1,6 +1,7 @@
 import './globals.css';
 import './prism-vsc-dark-plus.css';
 import Footer from '@/components/footer';
+import Analytics from '@/components/google-analytics';
 import Header from '@/components/header';
 import cn from '@/utils/cn';
 
@@ -36,6 +37,9 @@ export const metadata = {
 export default function RootLayout({ children }: { children: JSX.Element }): JSX.Element {
   return (
     <html lang='ja'>
+      <head>
+        <Analytics />
+      </head>
       <body>
         <div className={cn('flex min-h-screen flex-col bg-neutral-50')}>
           <Header />
