@@ -27,7 +27,7 @@ export default function Image({ params }: Params): ImageResponse {
             background: '#fb923c',
             display: 'flex',
             height: '100%',
-            padding: '20px',
+            padding: '30px',
             width: '100%',
           }}
         >
@@ -35,14 +35,13 @@ export default function Image({ params }: Params): ImageResponse {
             style={{
               alignItems: 'center',
               background: '#fff',
-              borderRadius: '16px',
               display: 'flex',
               justifyContent: 'center',
               padding: '0 20px',
               position: 'relative',
             }}
           >
-            <span style={{ fontSize: 64 }}>{post.title}</span>
+            <span style={{ fontSize: 64, fontWeight: 'bold' }}>{post.title}</span>
             <div
               style={{
                 alignItems: 'center',
@@ -59,7 +58,7 @@ export default function Image({ params }: Params): ImageResponse {
                 src={`${process.env.NEXT_PUBLIC_URL || ''}/orange.jpg`}
                 style={{ borderRadius: '50%', height: '84px', width: '84px' }}
               />
-              <span style={{ fontSize: 48 }}>vanilla.dev</span>
+              <span style={{ fontSize: 48, fontWeight: 'bold' }}>vanilla.dev</span>
             </div>
           </div>
         </div>
