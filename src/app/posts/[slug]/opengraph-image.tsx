@@ -26,7 +26,6 @@ export default function Image({ params }: Params): ImageResponse {
           style={{
             background: '#fb923c',
             display: 'flex',
-            fontSize: 64,
             height: '100%',
             padding: '20px',
             width: '100%',
@@ -43,17 +42,25 @@ export default function Image({ params }: Params): ImageResponse {
               position: 'relative',
             }}
           >
-            <span>{post.title}</span>
-            <span
+            <span style={{ fontSize: 64 }}>{post.title}</span>
+            <div
               style={{
-                bottom: '32px',
-                fontSize: 48,
+                alignItems: 'center',
+                bottom: '20px',
+                display: 'flex',
+                gap: '20px',
                 position: 'absolute',
-                right: '40px',
+                right: '20px',
               }}
             >
-              vanilla.dev
-            </span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                alt=''
+                src={`${process.env.NEXT_PUBLIC_URL || ''}/orange.jpg`}
+                style={{ borderRadius: '50%', height: '84px', width: '84px' }}
+              />
+              <span style={{ fontSize: 48 }}>vanilla.dev</span>
+            </div>
           </div>
         </div>
       ),
