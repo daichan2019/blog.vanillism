@@ -1,5 +1,4 @@
 import './globals.css';
-import './prism-vsc-dark-plus.css';
 import Footer from '@/components/footer';
 import Analytics from '@/components/google-analytics';
 import Header from '@/components/header';
@@ -28,9 +27,6 @@ export const metadata = {
     description: 'vanilla.dev blog',
     site: '@vanilla_dev',
     title: 'vanilla.dev blog',
-  },
-  verification: {
-    google: 'サーチコンソールのやつ',
   },
 };
 

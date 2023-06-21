@@ -3,7 +3,7 @@ import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis';
 import rehypeAutolinkHeadings, { Options as RehypeAutolinkHeadingsOptions } from 'rehype-autolink-headings';
 import rehypeCodeTitles from 'rehype-code-titles';
 import rehypeExternalLinks from 'rehype-external-links';
-import rehypePrism from 'rehype-prism-plus';
+import rehypePrettyCode, { Options as RehypePrettyCodeOptions } from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
 
@@ -44,6 +44,11 @@ const Post = defineDocumentType(() => ({
   name: 'Post',
 }));
 
+export const rehypePrettyCodeOptions: Partial<RehypePrettyCodeOptions> = {
+  keepBackground: true,
+  theme: 'dark-plus',
+};
+
 export default makeSource({
   contentDirPath: 'posts',
   documentTypes: [Post],
@@ -51,7 +56,7 @@ export default makeSource({
     rehypePlugins: [
       rehypeSlug,
       rehypeCodeTitles,
-      rehypePrism,
+      [rehypePrettyCode, rehypePrettyCodeOptions],
       rehypeAccessibleEmojis,
       rehypeExternalLinks,
       (option: RehypeAutolinkHeadingsOptions) =>

@@ -32,7 +32,7 @@ export default function Page({ params }: PageProps): JSX.Element | null {
       <h1 className={cn('mt-3 text-3xl font-bold xl:text-4xl')}>{post?.title}</h1>
       <div
         className={cn(
-          'prose mt-16 max-w-none prose-h2:border-b prose-h2:border-orange-500 prose-h2:pb-2 prose-code:before:hidden prose-code:after:hidden [&:not(.code-highlight)]:prose-code:rounded-md [&:not(.code-highlight)]:prose-code:bg-zinc-200 [&:not(.code-highlight)]:prose-code:px-1 [&:not(.code-highlight)]:prose-code:py-0.5 [&:not(.code-highlight)]:prose-code:font-normal',
+          'prose mt-16 max-w-none prose-h2:border-b prose-h2:border-orange-500 prose-h2:pb-2 prose-code:before:hidden prose-code:after:hidden prose-pre:mt-3',
         )}
       >
         <MDXContent />
