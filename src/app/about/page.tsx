@@ -8,9 +8,9 @@ export const metadata = {
 
 export default function Page(): JSX.Element {
   return (
-    <div className={cn('flex flex-col items-center gap-8 lg:flex-row')}>
+    <div>
       <Image alt='' className={cn('rounded-full')} height={240} src='/orange.jpg' width={240} />
-      <div>
+      <div className={cn('mt-8')}>
         <h2 className={cn('text-2xl font-bold md:text-4xl')}>vanilla.dev</h2>
         <p className={cn('mt-8')}>
           Hi, I am vanilla.dev. I am a software engineer interested in Web Front-end.
