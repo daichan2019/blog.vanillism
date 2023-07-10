@@ -32,7 +32,7 @@ export default function Image({ params }: Params): ImageResponse {
           width: '100%',
         }}
       >
-        {post.title}
+        {post?.title}
       </div>
     ),
     {
