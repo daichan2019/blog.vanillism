@@ -15,7 +15,6 @@ export const metadata = {
     siteName: 'vanilla.dev blog',
     title: 'vanilla.dev blog',
     type: 'website',
-    url: 'https://blog.vanillism.com',
   },
   title: {
     default: 'vanilla.dev blog',
