@@ -39,7 +39,7 @@
     "clsx": "1.2.1",
     "contentlayer": "0.3.4",
     "date-fns": "2.30.0",
-    "eslint": "8.47.0",
+    "eslint": "8.48.0",
     "eslint-config-next": "13.4.19",
     "eslint-config-prettier": "8.10.0",
     "eslint-config-standard": "17.1.0",
